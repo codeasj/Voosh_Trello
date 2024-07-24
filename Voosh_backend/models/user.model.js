@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 const userSchema = new mongoose.Schema(
   {
+    icon: {
+      type: String,
+    },
     firstName: {
       type: String,
     },
@@ -15,7 +18,7 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    hash: {
+    password: {
       type: String,
       required: true,
     },
@@ -23,11 +26,7 @@ const userSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    phone: {
-      type: Number,
-    },
   },
-
   {
     timestamps: true,
   }
