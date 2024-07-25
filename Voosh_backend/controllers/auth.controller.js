@@ -1,10 +1,15 @@
 import User from "../models/user.model.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import sendEmail from "../utils/mailSender.js";
+import { generateJwtToken } from "../utils/generateJwtToken.js";
+import sendMail from "../utils/mailSender.js";
 
 // Register a new user
 export const register = async (req, res, next) => {
   try {
     const { email, password, firstName, lastName } = req.body;
+    const fileName = req.file?.filename;
     const user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({
@@ -13,8 +18,6 @@ export const register = async (req, res, next) => {
       });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    const fileName = req.files?.icon[0]?.filename;
 
     const token = jwt.sign(
       { data: email },
@@ -96,12 +99,11 @@ export const login = async (req, res, next) => {
     const payload = {
       email: user?.email,
       id: user?._id,
-      entityId: user?.entityId,
     };
 
-    if (await bcrypt.compare(password, user.hash)) {
+    if (await bcrypt.compare(password, user.password)) {
       const accessToken = generateJwtToken(payload);
-      user.hash = undefined;
+      user.password = undefined;
 
       const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),

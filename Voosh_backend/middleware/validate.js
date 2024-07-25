@@ -11,11 +11,6 @@ export function validateReq(req, res, next) {
 
   result?.errors?.forEach?.((err) => {
     errors[err.path] = err.msg;
-    __help[err.path] = `${err.msg} in ${err.location}, ${
-      typeof err.value !== "undefined"
-        ? "received " + err.value
-        : "no value received"
-    }`;
   });
 
   if (req.fileError) {

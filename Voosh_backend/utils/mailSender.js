@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 
-const sendMail = async (email, title, body, type = "auth") => {
+const sendMail = async (email, title, body) => {
   try {
     let transporter = nodemailer.createTransport({
       host: process.env.MAIL_HOST,
@@ -21,7 +21,7 @@ const sendMail = async (email, title, body, type = "auth") => {
       <div style="background-color: #f2f2f2; padding: 20px;">
       
             <p style="color: #666;">Please verify your email address by clicking the link below:</p>
-            <a href= ${process.env.URL}/${type}/verify/${token} style="display: inline-block; background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Verify Email</a>
+            <a href= ${process.env.URL}/auth/verify/${token} style="display: inline-block; background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Verify Email</a>
         
             </div>
       `,
