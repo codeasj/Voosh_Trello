@@ -10,7 +10,14 @@ export const InputWrapper = ({ children, ...rest }) => {
 
 export default function Input(props) {
   const commonProps = React.useContext(WrapperContext);
-  const { type, name, register, required = false, placeholder } = props;
+  const {
+    type,
+    name,
+    register,
+    required = false,
+    placeholder,
+    className,
+  } = props;
   const formRegister =
     typeof commonProps.register === "function"
       ? commonProps.register(name)
@@ -23,7 +30,7 @@ export default function Input(props) {
       required={required}
       name={name}
       {...formRegister}
-      className="outline-none rounded border pl-2  w-full border-[lightgrey] h-10"
+      className={`outline-none rounded border pl-2  w-full border-[lightgrey] h-10 ${className}`}
     />
   );
 }

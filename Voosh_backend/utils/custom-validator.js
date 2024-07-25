@@ -8,7 +8,6 @@ const validators = {
 
 function check(key) {
   const validator = validators[key.at(0)];
-  console.log(key.slice(1));
   if (!validator)
     throw new Error(
       "Missing type of key, append - [: for param] | [? for query] | [@ for body]"

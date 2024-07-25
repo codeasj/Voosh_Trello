@@ -95,7 +95,7 @@ export const login = async (req, res, next) => {
     if (!user) {
       return res.status(400).json({ message: "User not found" });
     }
-    // console.log({ user });
+
     const payload = {
       email: user?.email,
       id: user?._id,
@@ -108,6 +108,7 @@ export const login = async (req, res, next) => {
       const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         httpOnly: true, //can't access from client side
+        // sameSite: "None", //cross site cookies
       };
 
       if (!user.isVerified) {
@@ -137,6 +138,20 @@ export const login = async (req, res, next) => {
         message: "Password Incorrect",
       });
     }
+  } catch (err) {
+    next(err);
+  }
+};
+
+// Logout a user
+export const logOut = async (req, res, next) => {
+  try {
+    res.clearCookie("token").json({
+      httpOnly: true,
+    });
+    res.status(200).json({
+      message: "Logged out successfully",
+    });
   } catch (err) {
     next(err);
   }

@@ -4,10 +4,12 @@ import {
   register,
   login,
   verifyEmail,
+  logOut,
 } from "../controllers/auth.controller.js";
 import { validateReq } from "../middleware/validate.js";
 import { imageUpload } from "../middleware/upload.middleware.js";
 import { validateEmail, validatePassword } from "../utils/custom-validator.js";
+import isUser from "../middleware/auth.middleware.js";
 
 router.post(
   "/register",
@@ -19,11 +21,8 @@ router.post(
 );
 router.get("/verify/:token", verifyEmail);
 
-router.post(
-  "/login",
-  [validateEmail("@email", { required: true })],
-  validateReq,
-  login
-);
+router.post("/login", [validateEmail("@email")], validateReq, login);
+
+router.post("/logOut", logOut);
 
 export default router;

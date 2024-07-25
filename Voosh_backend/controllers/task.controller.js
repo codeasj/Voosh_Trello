@@ -9,7 +9,7 @@ export const createTask = async (req, res, next) => {
       title,
       description,
       status,
-      addedBy: req.userId,
+      addedBy: req.user?.id,
     });
     res.status(201).json({
       status: "success",
@@ -50,7 +50,7 @@ export const updateTaskById = async (req, res, next) => {
         title,
         description,
         status,
-        updatedBy: req.userId,
+        updatedBy: req.user?.id,
       },
       { new: true }
     );

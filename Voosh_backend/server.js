@@ -11,8 +11,6 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-export { __dirname };
-
 const app = express();
 
 //middleware
@@ -21,7 +19,8 @@ app.use(cookieParser());
 
 app.use(
   cors({
-    origin: "*",
+    credentials: true,
+    origin: `${process.env.CLIENT_URL}`,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
 );
@@ -34,7 +33,7 @@ app.use(errorHandler);
 //database connection
 connect();
 //server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
